@@ -9,7 +9,7 @@
       </div>
       <PhotoGrid />
       <Teleport to="body">
-        <div class="fixed bottom-4 left-4 z-50">
+        <div class="fixed bottom-20 sm:bottom-20 xl:bottom-4 left-4 sm:left-6 xl:left-4 z-50">
           <UCard :ui="{ body: { padding: '!p-2' }, shadow: 'shadow-lg' }">
             <PhotoToolbar />
           </UCard>
