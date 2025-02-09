@@ -80,8 +80,8 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
 <template>
   <div class="flex flex-col space-y-2 mb-4">
     <UAlert
-      :title="$t('settings.s3.info.privacy.title')"
-      :description="$t('settings.s3.info.privacy.description')"
+      :title="$t('settings.info.privacy.title')"
+      :description="$t('settings.info.privacy.description')"
     />
     <UAlert
       v-if="
@@ -91,11 +91,11 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
         !state.accKeyId ||
         !state.secretAccKey
       "
-      :title="$t('settings.s3.info.howTo.title')"
+      :title="$t('settings.info.howTo.title')"
     >
       <template #description>
         <p>
-          {{ $t("settings.s3.info.howTo.description.part1") }}
+          {{ $t("settings.info.howTo.description.part1") }}
           <ULink
             :to="
               $i18n.locale === 'zh'

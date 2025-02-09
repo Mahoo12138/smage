@@ -213,21 +213,7 @@
   "settings": {
     "title": "设置",
     "s3": {
-      "title": "S3 存储桶设置",
-      "info": {
-        "privacy": {
-          "title": "隐私声明",
-          "description": "你的 S3 访问密钥将被保存在浏览器的本地存储中，不会被上传到任何服务器。"
-        },
-        "howTo": {
-          "title": "如何填充这些字段？",
-          "description": {
-            "part1": "请查阅我们的",
-            "part2": "文档",
-            "part3": "。"
-          }
-        }
-      },
+      "title": "存储桶设置",
       "form": {
         "endpoint": {
           "title": "Endpoint",
@@ -268,6 +254,50 @@
       },
       "submitFormButton": {
         "title": "测试连接",
+        "icons": {
+          "upload": "上传",
+          "list": "列出",
+          "delete": "删除"
+        },
+        "message": {
+          "try": {
+            "title": "正在测试连通性 ..."
+          },
+          "success": {
+            "title": "测试连接成功",
+            "description": "所有操作均可使用。"
+          },
+          "warning": {
+            "title": "部分权限未获取",
+            "description": "更多信息请查看按钮旁边的指示器。"
+          },
+          "fail": {
+            "title": "测试连接失败",
+            "description": "似乎您有获取 (Get) 对象的权限，但没有上传 (upload)、列出 (list) 或删除 (delete) 对象的权限。",
+            "desc4configOrCors": "请检查 S3 设置或存储桶的 CORS 配置。",
+            "actionLabel": "查看文档",
+            "actionLink": "https://docs.smage.mahoo12138.cn/zh/guide/getting-started#配置-s3-或其兼容服务"
+          }
+        }
+      }
+    },
+    "sync": {
+      "title": "同步设置",
+      "none": {
+        "title": "不开启"
+      },
+      "webdav": {
+        "title": "WebDAV"
+      },
+      "gist": {
+        "title": "Github Gist"
+      },
+      "submitFormButton": {
+        "titles": {
+          "test": "测试连接",
+          "upload": "上传数据",
+          "download": "下载数据"
+        },
         "icons": {
           "upload": "上传",
           "list": "列出",
@@ -348,6 +378,10 @@
         "description": "如果启用，主页将重定向到上传页面。\n页脚中的链接始终可用。",
         "title": "禁用主页"
       },
+      "syncType": {
+        "title": "同步方式",
+        "description": "选择你喜爱的同步类型"
+      },
       "titles": {
         "gallery": "图库设置",
         "misc": "杂项",
@@ -392,6 +426,20 @@
         "1": "配置是您当前设置的快照。",
         "2": "您可以将当前设置保存为配置文件，或加载配置文件以恢复设置。",
         "3": "如果您更改当前设置，已保存的配置将不会受到影响。"
+      }
+    },
+    "info": {
+      "privacy": {
+        "title": "隐私声明",
+        "description": "您的所有认证相关数据将被保存在浏览器的本地存储中，不会被上传到任何服务器。"
+      },
+      "howTo": {
+        "title": "如何填充这些字段？",
+        "description": {
+          "part1": "请查阅我们的",
+          "part2": "文档",
+          "part3": "。"
+        }
       }
     }
   }

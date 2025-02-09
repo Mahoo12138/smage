@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { SyncType } from "../sync";
 type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
@@ -19,11 +20,15 @@ type GallerySettings = {
   fuzzySearchThreshold: number;
 };
 
+export type SyncSettings = {
+  syncType: SyncType
+}
+
 export type AppSettings = Prettify<
   FileUploadSettings &
-    GallerySettings & {
-      noLongerShowRootPage: boolean;
-    }
+  GallerySettings & SyncSettings & {
+    noLongerShowRootPage: boolean;
+  }
 >;
 
 export const fileUploadSettingsSchema = z.object({

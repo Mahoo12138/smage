@@ -1,7 +1,7 @@
-import type { AppSettings } from "./AppSettings";
-import type { S3Settings } from "./S3Settings";
-export * from "./S3Settings";
-export * from "./AppSettings";
+import type { AppSettings } from "../common/data/AppSettings";
+import type { S3Settings } from "../common/data/S3Settings";
+export * from "../common/data/S3Settings";
+export * from "../common/data/AppSettings";
 
 export interface UploadedFileLinkObj {
   link: string;

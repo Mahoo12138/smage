@@ -8,6 +8,10 @@ const links = computed(() => [
       to: localePath("/settings/profiles"),
     },
     {
+      label: t("settings.sync.title"),
+      to: localePath("/settings/sync"),
+    },
+    {
       label: t("settings.s3.title"),
       to: localePath("/settings/s3"),
     },

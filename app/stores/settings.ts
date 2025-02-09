@@ -1,5 +1,5 @@
 import { skipHydrate } from "pinia";
-import type { AllSettings, AppSettings, S3Settings } from "~/types";
+import type { AllSettings, AppSettings, S3Settings, SyncSettings } from "~/types";
 import { appSettingsSchema, s3SettingsSchema } from "~/types";
 import * as checkOp from "~/utils/testOps";
 
@@ -18,6 +18,7 @@ export const useSettingsStore = defineStore("settings", () => {
     } satisfies S3Settings as S3Settings,
     { mergeDefaults: true },
   );
+
   const app = useLocalStorage(
     "app-settings",
     {
@@ -29,6 +30,7 @@ export const useSettingsStore = defineStore("settings", () => {
       compressionMaxWidthOrHeight: "",
       keyTemplate: "",
       noLongerShowRootPage: false,
+      syncType: "none"
     } satisfies AppSettings as AppSettings,
     { mergeDefaults: true },
   );

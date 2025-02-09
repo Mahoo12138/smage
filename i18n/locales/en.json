@@ -244,22 +244,22 @@
       },
       "no-profiles-saved-yet": "No profiles saved yet."
     },
+    "info": {
+      "privacy": {
+        "title": "Privacy Statement",
+        "description": "All data on this site is stored in your local browser and is not uploaded to a server."
+      },
+      "howTo": {
+        "title": "How to fill in these fields?",
+        "description": {
+          "part1": "Please check out our ",
+          "part2": "documentation",
+          "part3": "."
+        }
+      }
+    },
     "s3": {
       "title": "S3 Settings",
-      "info": {
-        "privacy": {
-          "title": "Privacy Statement",
-          "description": "All data on this site is stored in your local browser and is not uploaded to a server."
-        },
-        "howTo": {
-          "title": "How to fill in these fields?",
-          "description": {
-            "part1": "Please check out our ",
-            "part2": "documentation",
-            "part3": "."
-          }
-        }
-      },
       "form": {
         "endpoint": {
           "title": "Endpoint",
@@ -381,6 +381,10 @@
         },
         "reset": "Reset to default"
       },
+      "syncType": {
+        "title": "Sync Type",
+        "description": "Choose your favorite sync service"
+      },
       "noLongerShowRootPage": {
         "description": "If enabled, the home page will be redirected to upload page. Link in Footer is always availble.",
         "title": "Disable Home Page"
@@ -393,6 +397,18 @@
         "unsupported_description": "This maybe due to a low-version browser."
       },
       "success": "Success"
+    },
+    "sync": {
+      "title": "Sync Settings",
+      "none": {
+        "title": "None"
+      },
+      "webdav": {
+        "title": "WebDAV"
+      },
+      "gist": {
+        "title": "Github Gist"
+      }
     }
   }
 }
