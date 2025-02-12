@@ -1,4 +1,5 @@
 import { skipHydrate } from "pinia";
+import type { SyncConfigSetting } from "~/common/sync";
 import type { AllSettings, AppSettings, S3Settings, SyncSettings } from "~/types";
 import { appSettingsSchema, s3SettingsSchema } from "~/types";
 import * as checkOp from "~/utils/testOps";
@@ -32,6 +33,22 @@ export const useSettingsStore = defineStore("settings", () => {
       noLongerShowRootPage: false,
       syncType: "none"
     } satisfies AppSettings as AppSettings,
+    { mergeDefaults: true },
+  );
+
+  const sync = useLocalStorage(
+    "sync-settings",
+    {
+      gist: {
+        token: ""
+      },
+      webdav: {
+        path: "",
+        host: "",
+        username: "",
+        password: ""
+      }
+    } satisfies SyncConfigSetting as SyncConfigSetting,
     { mergeDefaults: true },
   );
 
@@ -150,6 +167,7 @@ export const useSettingsStore = defineStore("settings", () => {
   return {
     s3: skipHydrate(s3),
     app: skipHydrate(app),
+    sync: skipHydrate(sync),
     validity: skipHydrate(validity),
 
     test,

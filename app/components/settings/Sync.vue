@@ -3,13 +3,18 @@ import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 
 import { SUPPORT_SYNC_TYPE } from '~/common/data';
+import { SyncFormSchemas } from '~/common/sync';
+
+import DynamicForm from "../DynamicForm.vue";
 
 const toast = useToast();
 const settings = useSettingsStore();
-const { app: state } = storeToRefs(settings);
+const { sync, app } = storeToRefs(settings);
 const { t } = useI18n();
 
 const form = ref();
+
+const state = computed(() => sync.value[app.value.syncType])
 
 const uploadChipColor = ref<"green" | "red" | "gray">("gray");
 const listChipColor = ref<"green" | "red" | "gray">("gray");
@@ -87,60 +92,21 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
   <div class="flex flex-col space-y-2 mb-4">
     <UAlert :title="$t('settings.info.privacy.title')" :description="$t('settings.info.privacy.description')" />
   </div>
-  <UForm ref="form" :schema="s3SettingsSchema" :state="state" class="space-y-4" @submit="onSubmit">
-    <UFormGroup :label="$t('settings.app.syncType.title')" :description="$t('settings.app.syncType.description')"
-      name="syncType">
-      <USelectMenu v-model="state.syncType" :options="SUPPORT_SYNC_TYPE">
-        <template #label>
-          {{ $t(`settings.sync.${state.syncType}.title`) }}
-        </template>
-        <template #option="{ option: type }">
-          {{ $t(`settings.sync.${type}.title`) }}
-        </template>
-      </USelectMenu>
-    </UFormGroup>
-
-    <UDivider />
-
-
-    <div class="flex justify-between">
-      <UFormGroup :label="$t('settings.s3.form.forcePathStyle.title')"
-        :description="$t('settings.s3.form.forcePathStyle.description')" name="forcePathStyle" />
-      <div class="flex flex-col justify-center">
-        <UToggle v-model="state.forcePathStyle" on-icon="i-heroicons-check-20-solid"
-          off-icon="i-heroicons-x-mark-20-solid" />
-      </div>
-    </div>
-
-    <UFormGroup :label="$t('settings.s3.form.publicUrl.title')" :hint="$t('settings.s3.form.publicUrl.optional')"
-      name="pubUrl">
-      <template #description>
-        <div>
-          <span class="inline-flex items-center">
-            {{ $t("settings.s3.form.publicUrl.description") }}
-            <UPopover mode="hover">
-              <UButton icon="i-mingcute-information-line" size="2xs" color="primary" square variant="link" :aria-label="$t(
-                'a11y.settings.s3.form.publicUrl.description.learnMoreButton',
-              )
-                " />
-              <template #panel>
-                <UCard :ui="{
-                  body: {
-                    base: 'max-w-[90vw] md:w-[40rem] space-y-3',
-                  },
-                }">
-                  <!-- prettier-ignore -->
-                  <p>{{ $t("settings.s3.form.publicUrl.descriptionExtended.line1") }}</p>
-                  <!-- prettier-ignore -->
-                  <p>{{ $t("settings.s3.form.publicUrl.descriptionExtended.line2") }}</p>
-                </UCard>
-              </template>
-            </UPopover>
-          </span>
-        </div>
+  <UFormGroup :label="$t('settings.app.syncType.title')" :description="$t('settings.app.syncType.description')"
+    name="syncType">
+    <USelectMenu v-model="state.syncType" :options="SUPPORT_SYNC_TYPE">
+      <template #label>
+        {{ $t(`settings.sync.${state.syncType}.title`) }}
       </template>
-      <UInput v-model="state.keyTemplate" />
-    </UFormGroup>
+      <template #option="{ option: type }">
+        {{ $t(`settings.sync.${type}.title`) }}
+      </template>
+    </USelectMenu>
+  </UFormGroup>
+
+  <UDivider class="my-4" />
+
+  <DynamicForm v-if="state.syncType !== 'none'" :schema="SyncFormSchemas[state.syncType]" :state="state">
 
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2 items-center justify-start">
@@ -162,5 +128,6 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
         </UButton>
       </div>
     </div>
-  </UForm>
+  </DynamicForm>
+
 </template>

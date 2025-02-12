@@ -1,3 +1,7 @@
+import type { z, ZodSchema, ZodTypeAny, ZodTypeDef } from "zod"
+import webDavAuthSchema from "./webdav/schema"
+import gistAuthSchema from "./gist/schema"
+
 export interface Coordinator {
     /**
      * Download fragmented data from cloud
@@ -50,6 +54,39 @@ export type TypeExt = {
 }
 
 export type SyncType =
-| 'none'
-| 'gist'
-| 'webdav'
+    | 'none'
+    | 'gist'
+    | 'webdav'
+
+export const SyncFormSchemas: { [key in SyncType]?: ZodSchema<any, ZodTypeDef, any> } = {
+    gist: gistAuthSchema,
+    webdav: webDavAuthSchema
+}
+
+export type SyncConfigSetting = {
+    gist: z.infer<typeof gistAuthSchema>,
+    webdav: z.infer<typeof webDavAuthSchema>,
+}
+
+
+declare module 'zod' {
+    interface ZodMeta {
+        label: string;
+    }
+}
+
+
+type FormField = {
+    key: string
+    label: string
+    description?: string
+    zodType: ZodTypeAny
+    uiType: 'input' | 'select' | 'checkbox' | 'datepicker' | 'custom'
+    uiProps?: Record<string, any>
+    options?: { label: string; value: any }[] // 下拉/单选选项
+    layout?: {
+        cols?: number // 栅格布局
+        class?: string
+    }
+}
+
