@@ -3,6 +3,7 @@ import type { SyncConfigSetting } from "~/common/sync";
 import type { AllSettings, AppSettings, S3Settings, SyncSettings } from "~/types";
 import { appSettingsSchema, s3SettingsSchema } from "~/types";
 import * as checkOp from "~/utils/testOps";
+import processor from '~/common/sync/processor';
 
 export const useSettingsStore = defineStore("settings", () => {
   // MARK: states
@@ -39,6 +40,7 @@ export const useSettingsStore = defineStore("settings", () => {
   const sync = useLocalStorage(
     "sync-settings",
     {
+      none: {},
       gist: {
         token: ""
       },
@@ -163,7 +165,7 @@ export const useSettingsStore = defineStore("settings", () => {
       profiles.value.splice(index, 1);
     }
   };
-
+  
   return {
     s3: skipHydrate(s3),
     app: skipHydrate(app),
@@ -173,7 +175,7 @@ export const useSettingsStore = defineStore("settings", () => {
     test,
     exportSettings,
     importSettings,
-
+    processor,
     profiles: skipHydrate(profiles),
     saveProfile,
     loadProfile,

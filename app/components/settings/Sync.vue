@@ -83,7 +83,7 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
 
   <UDivider class="my-4" />
 
-  <DynamicForm v-if="app.syncType !== 'none'" :key="app.syncType" :schema="SyncFormSchemas[app.syncType]" :state="state"
+  <DynamicForm v-if="app.syncType !== 'none'" :key="app.syncType" :schema="SyncFormSchemas[app.syncType]!" :state="state"
     :onSubmit="onSubmit">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2 items-center justify-start">
