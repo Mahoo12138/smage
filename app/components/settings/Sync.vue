@@ -7,18 +7,14 @@ import { SyncFormSchemas } from '~/common/sync';
 
 import DynamicForm from "../DynamicForm.vue";
 
+const { t } = useI18n();
 const toast = useToast();
 const settings = useSettingsStore();
 const { sync, app } = storeToRefs(settings);
-const { t } = useI18n();
-
-const form = ref();
-
 const state = computed(() => sync.value[app.value.syncType])
 
+const form = ref();
 const uploadChipColor = ref<"green" | "red" | "gray">("gray");
-const listChipColor = ref<"green" | "red" | "gray">("gray");
-const deleteChipColor = ref<"green" | "red" | "gray">("gray");
 
 const isTestingConnectivity = ref(false);
 
@@ -46,10 +42,13 @@ const failActions = [
 async function onSubmit(_event: FormSubmitEvent<Schema>) {
   console.log('action', action);
   isTestingConnectivity.value = true;
+
   toast.add({
     title: t("settings.s3.submitFormButton.message.try.title"),
   });
-  // const { get, upload, delete: del, list } = await settings.test();
+
+  await settings.processor.checkAuth();
+
   if ('!get'.lastIndexOf('')) {
     toast.add({
       title: t("settings.s3.submitFormButton.message.fail.title"),
@@ -57,34 +56,12 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
       actions: failActions,
     });
     uploadChipColor.value = "red";
-    listChipColor.value = "red";
-    deleteChipColor.value = "red";
     isTestingConnectivity.value = false;
     return;
   }
 
-  // uploadChipColor.value = upload ? "green" : "red";
-  // listChipColor.value = list ? "green" : "red";
-  // deleteChipColor.value = del ? "green" : "red";
 
   isTestingConnectivity.value = false;
-
-  // const i18nSectionInToast = (() => {
-  //   if (upload && list && del) {
-  //     return "success";
-  //   } else if (!upload && !list && !del) {
-  //     return "fail";
-  //   } else {
-  //     return "warning";
-  //   }
-  // })();
-  // toast.add({
-  //   // prettier-ignore
-  //   title: t(`settings.s3.submitFormButton.message.${i18nSectionInToast}.title`),
-  //   // prettier-ignore
-  //   description: t(`settings.s3.submitFormButton.message.${i18nSectionInToast}.description`),
-  //   actions: i18nSectionInToast === "success" ? undefined : failActions,
-  // });
 }
 </script>
 
@@ -94,9 +71,9 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
   </div>
   <UFormGroup :label="$t('settings.app.syncType.title')" :description="$t('settings.app.syncType.description')"
     name="syncType">
-    <USelectMenu v-model="state.syncType" :options="SUPPORT_SYNC_TYPE">
+    <USelectMenu v-model="app.syncType" :options="SUPPORT_SYNC_TYPE">
       <template #label>
-        {{ $t(`settings.sync.${state.syncType}.title`) }}
+        {{ $t(`settings.sync.${app.syncType}.title`) }}
       </template>
       <template #option="{ option: type }">
         {{ $t(`settings.sync.${type}.title`) }}
@@ -106,8 +83,8 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
 
   <UDivider class="my-4" />
 
-  <DynamicForm v-if="state.syncType !== 'none'" :schema="SyncFormSchemas[state.syncType]" :state="state">
-
+  <DynamicForm v-if="app.syncType !== 'none'" :key="app.syncType" :schema="SyncFormSchemas[app.syncType]" :state="state"
+    :onSubmit="onSubmit">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2 items-center justify-start">
         <UTooltip :text="$t('settings.s3.submitFormButton.icons.upload')">
