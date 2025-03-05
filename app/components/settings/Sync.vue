@@ -47,9 +47,9 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
     title: t("settings.s3.submitFormButton.message.try.title"),
   });
 
-  await settings.processor.checkAuth();
-
-  if ('!get'.lastIndexOf('')) {
+  const res = await settings.processor.checkAuth();
+  console.log('res', res);
+  if (!res.success) {
     toast.add({
       title: t("settings.s3.submitFormButton.message.fail.title"),
       description: t("settings.s3.submitFormButton.message.fail.desc4configOrCors"),
@@ -83,8 +83,8 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
 
   <UDivider class="my-4" />
 
-  <DynamicForm v-if="app.syncType !== 'none'" :key="app.syncType" :schema="SyncFormSchemas[app.syncType]" :state="state"
-    :onSubmit="onSubmit">
+  <DynamicForm v-if="app.syncType !== 'none'" :key="app.syncType" :schema="SyncFormSchemas[app.syncType]!"
+    :state="state" :onSubmit="onSubmit">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2 items-center justify-start">
         <UTooltip :text="$t('settings.s3.submitFormButton.icons.upload')">

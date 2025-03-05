@@ -48,6 +48,11 @@ export const appMiscSettingsSchema = z.object({
   noLongerShowRootPage: z.boolean(),
 });
 
+export const appSyncSettingsSchema = z.object({
+  syncType: z.enum(['none', 'gist', 'webdav']),
+});
+
 export const appSettingsSchema = appMiscSettingsSchema
   .merge(fileUploadSettingsSchema)
+  .merge(appSyncSettingsSchema)
   .merge(gallerySettingsSchema);

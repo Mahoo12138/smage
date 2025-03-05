@@ -36,7 +36,7 @@ export async function judgeDirExist(context: WebDAVContext, dirPath: string): Pr
     const method = 'PROPFIND'
     headers.append('Accept', 'text/plain,application/xml')
     headers.append('Depth', '1')
-    const response = await fetch(url, { method, headers })
+    const response = await fetch(url, { method, headers, credentials: 'include' })
     const status = response?.status
     if (status == 207) {
         return true
